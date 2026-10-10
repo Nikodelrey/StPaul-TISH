@@ -1,1 +1,1 @@
-# St-Paul-TISH
+# StPaul-TISH
