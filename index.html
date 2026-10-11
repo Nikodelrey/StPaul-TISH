@@ -1,3 +1,6 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>St. Paul TISH Filler</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +23,7 @@
   --accent:#6fa6e6; --accent-ink:#0d1520; --accent-soft:#1d2d42;
   --ok:#6cc893; --ok-soft:#183325; --warn:#e5aa52; --warn-soft:#3a2b14; --bad:#f08a80; --bad-soft:#3d1f1c; color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.45;padding-inline:16px;padding-block:0 120px}
 .wrap{max-width:760px;margin:0 auto}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px 8px;border-bottom:1px solid var(--line);margin-inline:-16px;padding-inline:16px}
@@ -167,7 +171,7 @@ function render(){
       if(it.t==="date")return;
       if(it.t==="ta"){
         const val=S.v[it.id]||"";
-        html+=`<div class="cm" data-cm="${key}">${val?"":`<button class="link" data-open="${key}">+ ${esc(it.l)}</button>`}<div ${val?"":"hidden"} id="cw${key}"><label for="t_${it.id}">${esc(it.l)}</label><textarea id="t_${it.id}" data-id="${it.id}">${esc(val)}</textarea></div></div>`;
+        html+=`<div class="cm" data-cm="${key}">${val?"":`<button class="link" data-open="${key}">+ Add comment or your own deficiency (${esc(it.l.replace(/ ?Comments?$/i,""))})</button>`}<div ${val?"":"hidden"} id="cw${key}"><label for="t_${it.id}">${esc(it.l)}</label><textarea id="t_${it.id}" data-id="${it.id}">${esc(val)}</textarea></div></div>`;
         return;
       }
       html+=`<div class="item" id="it${key}"><div class="lab">${it.r?'<span class="req">*</span>':""}${esc(it.l)}</div>`;
@@ -179,10 +183,8 @@ function render(){
         const cur=S.c[it.n]||[];
         html+=`<div class="chips">`+it.rate.map(o=>`<button class="chip ${rateCls(o)}" data-cb="${it.n}" data-rate="1" data-o="${esc(o)}" aria-pressed="${cur.includes(o)}">${esc(o)}</button>`).join("")+`</div>`;
         if(it.def.length){
-          const hasDef=it.def.some(o=>cur.includes(o));
-          const showDef=hasDef||cur.includes("Below Minimum")||cur.includes("Hazardous Condition");
-          html+=`<button class="link" data-tog="${key}" ${showDef?"hidden":""}>Show ${it.def.length} deficiency codes</button><div class="defs" id="d${key}" ${showDef?"":"hidden"}>`+
-            it.def.map(o=>{const m=o.match(/^([BCH])\s*-?\s*(.*)$/);return `<button class="def" data-cb="${it.n}" data-o="${esc(o)}" aria-pressed="${cur.includes(o)}"><span class="box"></span><span class="code ${m?m[1]:""}">${m?m[1]:"?"}</span><span>${esc(m?m[2]:o)}</span></button>`}).join("")+`</div>`;
+          html+=`<div class="defs" id="d${key}">`+
+            it.def.map(o=>{const m=o.match(/^([BCH])\s*[-–—]?\s*(.*)$/);return `<button class="def" data-cb="${it.n}" data-o="${esc(o)}" aria-pressed="${cur.includes(o)}"><span class="box"></span><span class="code ${m?m[1]:""}">${m?m[1]:"?"}</span><span>${esc(m?m[2]:o)}</span></button>`}).join("")+`</div>`;
         }
       }
       html+=`</div>`;
@@ -202,10 +204,8 @@ document.addEventListener("click",e=>{
   if(b.dataset.cb){const n=b.dataset.cb,o=b.dataset.o,it=findItem(n);let cur=S.c[n]||[];
     if(b.dataset.rate){const on=cur.includes(o);cur=cur.filter(x=>!it.rate.includes(x));if(!on)cur.push(o);
       b.parentElement.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",cur.includes(c.dataset.o)));
-      if(!on&&(o==="Below Minimum"||o==="Hazardous Condition")){const item=b.closest(".item");const d=item.querySelector(".defs"),t=item.querySelector("[data-tog]");if(d){d.hidden=false;if(t)t.hidden=true}}
     }else{cur=cur.includes(o)?cur.filter(x=>x!==o):[...cur,o];b.setAttribute("aria-pressed",cur.includes(o))}
     S.c[n]=cur;save();return}
-  if(b.dataset.tog){$("d"+b.dataset.tog).hidden=false;b.hidden=true;return}
   if(b.dataset.open){const k=b.dataset.open;$("cw"+k).hidden=false;b.remove();$("cw"+k).querySelector("textarea").focus();return}
   if(b.dataset.meets!==undefined){meets([SPEC[+b.dataset.meets]]);return}
 });
@@ -215,10 +215,10 @@ document.addEventListener("input",e=>{
   if(t.id==="f_TISHDateofEvaluation"){S.v[DATE_ID]=t.value;save();return}
   if(t.dataset.id){S.v[t.dataset.id]=t.value;save()}
 });
-function meets(secs){let n=0;secs.forEach(s=>s.items.forEach(it=>{if(it.t==="cb"&&it.rate.includes("Meets Minimum")){const cur=S.c[it.n]||[];if(!cur.some(x=>it.rate.includes(x))){S.c[it.n]=[...cur,"Meets Minimum"];n++}}}));save();render();flash(n?`Set ${n} rating${n>1?"s":""} to Meets Minimum.`:"Every rating in that range already has an answer.")}
+function meets(secs){let n=0;secs.forEach(s=>s.items.forEach(it=>{if(it.t==="cb"&&it.rate.includes("Meets Minimum")){const cur=S.c[it.n]||[];if(!cur.length){S.c[it.n]=[...cur,"Meets Minimum"];n++}}}));save();render();flash(n?`Set ${n} rating${n>1?"s":""} to Meets Minimum.`:"Every rating in that range already has an answer.")}
 $("bAllMeets").onclick=()=>meets(SPEC);
 
-function answered(it){if(it.t==="cb")return(S.c[it.n]||[]).some(x=>it.rate.includes(x));if(it.t==="ta")return true;return !!S.v[it.id]}
+function answered(it){if(it.t==="cb")return(S.c[it.n]||[]).length>0;if(it.t==="ta")return true;return !!S.v[it.id]}
 let flashT=null;
 function progress(){
   let tot=0,done=0;
