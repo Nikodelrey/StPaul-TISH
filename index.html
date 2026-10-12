@@ -156,6 +156,16 @@ section.sec{margin-top:26px}
       <textarea id="bm" readonly>javascript:(()=&gt;{const s=prompt('Paste the TISH fill code');if(!s)return;let d;try{d=JSON.parse(s.trim())}catch(e){alert('That paste is not a TISH fill code. Copy it again from your form.');return}const fire=(e,t)=&gt;e.dispatchEvent(new Event(t,{bubbles:true}));const g=new Set(d.g||[]),k=new Set(d.k||[]);let miss=[];const run=()=&gt;{miss=[];for(const id in d.v){const e=document.getElementById(id);if(!e){miss.push(id);continue}const v=d.v[id];if(e.tagName==='SELECT'){const i=[...e.options].findIndex(o=&gt;o.text.trim()===v);if(i&lt;0){miss.push(id+' ('+v+')');continue}if(e.selectedIndex!==i){e.selectedIndex=i;fire(e,'change')}}else if(e.value!==v){const p=Object.getPrototypeOf(e);Object.getOwnPropertyDescriptor(p,'value').set.call(e,v);fire(e,'input');fire(e,'change');fire(e,'blur')}}document.querySelectorAll('input[type=checkbox]').forEach(e=&gt;{if(!g.has(e.name))return;const w=k.has(e.id);if(e.checked!==w)e.click()});};run();setTimeout(()=&gt;{run();alert('TISH Fill finished.'+(miss.length?'\n\nCould not fill '+miss.length+':\n'+miss.join('\n'):'\nEvery field was filled. Review the page before moving on.'))},1500);})();</textarea>
       <div class="tools"><button id="bCopyBm">Copy bookmark code</button></div>
     </div>
+    <div class="panel">
+      <h3>Backup: the TISH Grab bookmark</h3>
+      <ol>
+        <li>Make a second bookmark the same way, named <b>TISH Grab</b>, using the code below.</li>
+        <li>Open a job on the St. Paul portal to its More Info step and tap TISH Grab.</li>
+        <li>Type the address, tap Save to Files, and pick a folder. Open from Files in this filler loads the copy.</li>
+      </ol>
+      <textarea id="bmGrab" readonly>javascript:(()=&gt;{const v={},k=[];document.querySelectorAll('input,select,textarea').forEach(e=&gt;{if(!e.id||e.type==='hidden')return;if(e.type==='checkbox'||e.type==='radio'){if(e.checked)k.push(e.id);return}if(e.tagName==='SELECT'){const o=e.options[e.selectedIndex];v[e.id]=o?o.text.trim():'';return}v[e.id]=e.value});let a=prompt('Property address (used for the file name):','')||'';a=a.trim();const n=Object.keys(v).length+k.length;const d={kind:'stpaul-tish-grab',savedAt:new Date().toISOString(),addr:a,url:location.href,v:v,k:k,text:document.body.innerText};const name=((a||'Portal copy').replace(/[\\/:*?"&lt;&gt;|#]+/g,'')+' '+new Date().toISOString().slice(0,10)+' portal copy.json');const f=new File([JSON.stringify(d,null,1)],name,{type:'application/json'});const w=document.createElement('div');w.style.cssText='position:fixed;left:0;right:0;top:0;z-index:999999;background:#fff;color:#111;padding:16px;border-bottom:3px solid #2a64a8;font:16px system-ui;box-shadow:0 4px 20px rgba(0,0,0,.3)';w.innerHTML='&lt;b&gt;TISH Grab&lt;/b&gt;&lt;div style="margin:6px 0 12px"&gt;Found '+n+' answers. Save the copy to Files.&lt;/div&gt;';const b=document.createElement('button');b.textContent='Save to Files';b.style.cssText='font:16px system-ui;padding:10px 16px;background:#2a64a8;color:#fff;border:0;border-radius:8px;margin-right:8px';const c=document.createElement('button');c.textContent='Close';c.style.cssText='font:16px system-ui;padding:10px 16px;border:1px solid #999;background:#fff;border-radius:8px';w.appendChild(b);w.appendChild(c);document.body.appendChild(w);c.onclick=()=&gt;w.remove();b.onclick=async()=&gt;{try{if(navigator.canShare&amp;&amp;navigator.canShare({files:[f]})){await navigator.share({files:[f]});w.remove();return}}catch(e){if(e&amp;&amp;e.name==='AbortError')return}const u=URL.createObjectURL(f);const l=document.createElement('a');l.href=u;l.download=name;document.body.appendChild(l);l.click();l.remove();b.textContent='Downloaded. Check Files, Downloads'}})();</textarea>
+      <div class="tools"><button id="bCopyGrab">Copy grab bookmark code</button></div>
+    </div>
   </div>
 
   <div id="form"></div>
@@ -315,6 +325,7 @@ function copy(text,label){
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(()=>{fb.hidden=true;flash(label)}).catch(fallback)}else fallback();
 }
 $("bCopy").onclick=()=>copy(fillCode(),"Fill code copied. Open the portal's More Info step and tap TISH Fill.");
+$("bCopyGrab").onclick=()=>copy($("bmGrab").value,"Grab bookmark code copied.");
 $("bCopyBm").onclick=()=>copy($("bm").value,"Bookmark code copied.");
 // ---------- spelling check ----------
 const TYPO_V="1.2.4",TYPO_BASE=`https://cdn.jsdelivr.net/npm/typo-js@${TYPO_V}/`;
@@ -383,11 +394,18 @@ $("bSaveFile").onclick=async()=>{
   const url=URL.createObjectURL(file);const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);
   store.set(KEY.dirty,false);flash("Downloaded "+name+". Find it in Files → Downloads.");
 };
+function fromGrab(g){const v={},c={},ks=new Set(g.k||[]);
+  SPEC.forEach(s=>s.items.forEach(it=>{
+    if(it.t==="cb"){const on=[...ks].filter(id=>id.startsWith(it.p)).map(id=>id.slice(it.p.length)).filter(o=>it.rate.includes(o)||it.def.includes(o));if(on.length)c[it.n]=on;return}
+    if(!it.id||!(it.id in (g.v||{})))return;let val=g.v[it.id]||"";
+    if(it.t==="date"){const m=val.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(m)val=`${m[3]}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`}
+    if(val)v[it.id]=val}));
+  return {kind:"stpaul-tish-sf",addr:g.addr||"",v,c};}
 $("bOpenFile").onclick=()=>$("fileIn").click();
 $("fileIn").onchange=e=>{
   const f=e.target.files&&e.target.files[0];if(!f)return;
   const r=new FileReader();
-  r.onload=()=>{try{const d=JSON.parse(r.result);if(d.kind!=="stpaul-tish-sf")throw 0;
+  r.onload=()=>{try{let d=JSON.parse(r.result);if(d.kind==="stpaul-tish-grab")d=fromGrab(d);if(d.kind!=="stpaul-tish-sf")throw 0;
       S={addr:d.addr||"",v:d.v||{},c:d.c||{}};save();store.set(KEY.dirty,false);render();window.scrollTo(0,0);flash("Opened "+(d.addr||f.name));}
     catch(err){flash("That file isn't a saved St. Paul single-family inspection.")}
     e.target.value="";};
