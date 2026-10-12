@@ -33,7 +33,7 @@ h1{font-size:17px;margin:0;font-weight:700;letter-spacing:-.01em;flex:1 1 auto;t
 .prog{font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .jump{display:flex;gap:8px;overflow-x:auto;max-width:760px;margin:8px auto 0;padding-bottom:2px;scrollbar-width:none}
 .jump a{flex:0 0 auto;font-size:16px;font-weight:600;text-decoration:none;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:11px 18px;min-height:46px;display:inline-flex;align-items:center;white-space:nowrap}
-.jump a:last-child{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.jump a#jSum{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
 .jump a .n{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--muted);margin-left:5px}
 .jump a.done{border-color:var(--ok);}
 .jump a.done .n{color:var(--ok)}
@@ -70,6 +70,15 @@ section.sec{margin-top:26px}
 .sumlist li .codes{margin:4px 0 0;padding-left:18px;font-size:14px}
 .sumlist li .cmt{font-size:14px;color:var(--muted);margin-top:4px;font-style:italic}
 .sumlist .none{cursor:default;color:var(--muted)}
+.spellnote{color:var(--muted);font-size:14px;max-width:65ch;margin:10px 0}
+.spellout{display:flex;flex-direction:column;gap:10px}
+.spbox{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.spbox .where{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.spword{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.spword .bad{font-weight:600;color:var(--bad);text-decoration:underline wavy var(--bad);text-underline-offset:3px;margin-right:4px}
+.spword button{padding:6px 11px;font-size:14px;border-radius:999px}
+.spword button.fix{border-color:var(--accent);color:var(--accent)}
+.spword button.ign{color:var(--muted)}
 .item{padding-block:14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
 .item.missing .lab::after{content:"needed";margin-left:8px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--warn);font-weight:600}
 .lab{font-weight:600;font-size:15px}
@@ -157,6 +166,11 @@ section.sec{margin-top:26px}
     <h3 class="sumh below">Below minimum <span id="belN"></span></h3>
     <ol class="sumlist" id="belList"></ol>
   </section>
+  <section class="sec" id="spell">
+    <div class="sechead" id="sSpell"><h2>Spelling check</h2><button class="primary" id="bSpell">Check spelling</button></div>
+    <p class="spellnote" id="spellMsg">Checks every comment box you've written in. The first check needs an internet connection; after that it also works offline.</p>
+    <div id="spellOut" class="spellout"></div>
+  </section>
 </main>
 
 <div class="bar">
@@ -192,7 +206,7 @@ function render(){
       if(it.t==="h"){html+=`<h3 class="subhead">${esc(it.l)}</h3>`;return}
       if(it.t==="ta"){
         const val=S.v[it.id]||"";
-        html+=`<div class="cm" data-cm="${key}">${val?"":`<button class="link" data-open="${key}">+ Add comment or your own deficiency (${esc(it.l.replace(/ ?Comments?$/i,""))})</button>`}<div ${val?"":"hidden"} id="cw${key}"><label for="t_${it.id}">${esc(it.l)}</label><textarea id="t_${it.id}" data-id="${it.id}">${esc(val)}</textarea></div></div>`;
+        html+=`<div class="cm" data-cm="${key}">${val?"":`<button class="link" data-open="${key}">+ Add comment or your own deficiency (${esc(it.l.replace(/ ?Comments?$/i,""))})</button>`}<div ${val?"":"hidden"} id="cw${key}"><label for="t_${it.id}">${esc(it.l)}</label><textarea id="t_${it.id}" data-id="${it.id}" spellcheck="true" autocorrect="on" autocapitalize="sentences">${esc(val)}</textarea></div></div>`;
         return;
       }
       html+=`<div class="item" id="it${key}"><div class="lab">${it.r?'<span class="req">*</span>':""}${esc(it.l)}</div>`;
@@ -212,7 +226,7 @@ function render(){
     });
     html+=`</section>`;
   });
-  f.innerHTML=html;$("jump").innerHTML=jump+`<a href="#sSum" id="jSum">Hazards<span class="n" id="jSumN"></span></a>`;
+  f.innerHTML=html;$("jump").innerHTML=jump+`<a href="#sSum" id="jSum">Hazards<span class="n" id="jSumN"></span></a><a href="#sSpell" id="jSpell">Spelling</a>`;
   $("addr").value=S.addr||"";$("f_TISHDateofEvaluation").value=S.v[DATE_ID]||"";
   progress();
 }
@@ -299,6 +313,52 @@ function copy(text,label){
 }
 $("bCopy").onclick=()=>copy(fillCode(),"Fill code copied. Open the portal's More Info step and tap TISH Fill.");
 $("bCopyBm").onclick=()=>copy($("bm").value,"Bookmark code copied.");
+// ---------- spelling check ----------
+const TYPO_V="1.2.4",TYPO_BASE=`https://cdn.jsdelivr.net/npm/typo-js@${TYPO_V}/`;
+const TRADE_WORDS="gfci afci splc tish hvac romex soffit soffits fascia downspout downspouts drywall subfloor flue flues damper dampers joist joists handrail handrails guardrail guardrails sump backflow pex csst egress knob tube bx sheathing shingles shingle flashing efflorescence spalling tuckpoint tuckpointing caulk caulking backdraft backdrafting reglet hydronic boiler boilers condensate thermocouple aquastat expansion relief vent venting vents grout grouting tpr bonding grounding ungrounded wye cleanout cleanouts trap traps s-trap p-trap lavatory lav whirlpool sillcock sillcocks hosebibb hosebibbs stairway stairways landings newel balusters baluster riser risers tread treads stringer stringers rafters rafter purlins ridge eave eaves gable dormer dormers knee kneewall rim mudsill sill sills lintel lintels tuck egress sq ft".split(" ");
+let typo=null;
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const myWords=()=>new Set(JSON.parse(lsGet("tishsp.words")||"[]"));
+async function loadTypo(){
+  if(typo)return typo;
+  const get=async(f)=>{const key="tishsp.typo."+TYPO_V+"."+f;let txt=lsGet(key);if(txt)return txt;const res=await fetch(TYPO_BASE+f);if(!res.ok)throw new Error("download");txt=await res.text();lsSet(key,txt);return txt};
+  const [js,aff,dic]=await Promise.all([get("typo.js"),get("dictionaries/en_US/en_US.aff"),get("dictionaries/en_US/en_US.dic")]);
+  if(!window.Typo){const s=document.createElement("script");s.textContent=js;document.head.appendChild(s)}
+  await new Promise(r=>setTimeout(r,30));
+  typo=new window.Typo("en_US",aff,dic);
+  return typo;
+}
+function spellItems(){const out=[];SPEC.forEach((sec,si)=>{let sub=sec.name;sec.items.forEach(it=>{if(it.t==="h"){sub=it.l;return}if(it.t==="ta"&&(S.v[it.id]||"").trim())out.push({id:it.id,where:sec.name+(sub!==sec.name?" · "+sub:""),label:it.l})})});return out}
+function badWords(txt,mine){
+  const seen=new Set(),bad=[];
+  (txt.match(/[A-Za-z][A-Za-z']*[A-Za-z]|[A-Za-z]/g)||[]).forEach(w=>{
+    const base=w.replace(/'s$/i,"");
+    if(base.length<3||seen.has(w))return;seen.add(w);
+    if(/^[A-Z]+s?$/.test(base))return;
+    const lw=base.toLowerCase();
+    if(TRADE_WORDS.includes(lw)||mine.has(lw))return;
+    if(typo.check(base)||typo.check(lw)||typo.check(lw.charAt(0).toUpperCase()+lw.slice(1)))return;
+    bad.push(w);
+  });return bad;
+}
+function runSpell(){
+  const mine=myWords();let html="",n=0;
+  spellItems().forEach(b=>{const bad=badWords(S.v[b.id],mine);if(!bad.length)return;n+=bad.length;
+    html+=`<div class="spbox"><div class="where" data-go="t_${b.id}">${esc(b.where)} · ${esc(b.label)}</div>`+
+      bad.map(w=>{let sug=[];try{sug=typo.suggest(w,3)}catch(e){}
+        return `<div class="spword"><span class="bad">${esc(w)}</span>${sug.map(s=>`<button class="fix" data-fix="${esc(b.id)}" data-w="${esc(w)}" data-s="${esc(s)}">${esc(s)}</button>`).join("")}${sug.length?"":'<span class="spellnote" style="margin:0">No suggestions</span>'}<button class="ign" data-ign="${esc(w)}">Ignore</button></div>`}).join("")+`</div>`});
+  $("spellOut").innerHTML=html;
+  $("spellMsg").textContent=n?`${n} word${n>1?"s":""} to look at. Tap a suggestion to fix it, or Ignore to keep the word and remember it.`:"No spelling problems found in your comments.";
+}
+$("bSpell").onclick=async()=>{const b=$("bSpell");b.disabled=true;b.textContent="Checking…";
+  try{await loadTypo();runSpell()}catch(e){$("spellMsg").textContent="Couldn't load the dictionary. Connect to the internet and try again; after one successful check it works offline."}
+  b.disabled=false;b.textContent="Check spelling"};
+$("spellOut").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.fix){const id=b.dataset.fix,w=b.dataset.w,s=b.dataset.s;
+    const re=new RegExp("(^|[^A-Za-z'])"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"(?![A-Za-z'])","g");
+    S.v[id]=S.v[id].replace(re,(m,p)=>p+s);const ta=$("t_"+id);if(ta)ta.value=S.v[id];save();runSpell();return}
+  if(b.dataset.ign){const m=myWords();m.add(b.dataset.ign.replace(/'s$/i,"").toLowerCase());lsSet("tishsp.words",JSON.stringify([...m]));runSpell()}
+});
 $("bTools").onclick=()=>{$("toolsPanel").hidden=!$("toolsPanel").hidden};
 
 function fileName(){
