@@ -302,8 +302,11 @@ function flash(m){$("barMsg").innerHTML=`<b>${esc(m)}</b>`;clearTimeout(flashT);
 
 function fillCode(){
   const v={},k=[],g=[];
-  for(const id in S.v){let val=S.v[id];if(!val)continue;if(id===DATE_ID){const m=val.match(/^(\d{4})-(\d{2})-(\d{2})$/);if(m)val=`${m[2]}/${m[3]}/${m[1]}`}v[id]=val}
-  SPEC.forEach(s=>s.items.forEach(it=>{if(it.t!=="cb")return;const cur=S.c[it.n]||[];if(!cur.length)return;g.push(it.n);cur.forEach(o=>k.push(it.p+o))}));
+  SPEC.forEach(s=>s.items.forEach(it=>{
+    if(it.t==="sel"||it.t==="txt"||it.t==="ta"||it.t==="date"){let val=S.v[it.id]||"";
+      if(it.id===DATE_ID){const m=val.match(/^(\d{4})-(\d{2})-(\d{2})$/);if(m)val=`${m[2]}/${m[3]}/${m[1]}`}
+      v[it.id]=val;return}
+    if(it.t!=="cb")return;g.push(it.n);(S.c[it.n]||[]).forEach(o=>k.push(it.p+o))}));
   return JSON.stringify({v,k,g});
 }
 function copy(text,label){
