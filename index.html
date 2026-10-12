@@ -242,18 +242,34 @@ $("bAllMeets").onclick=()=>meets(SPEC);
 function answered(it){if(it.t==="cb")return(S.c[it.n]||[]).length>0;if(it.t==="ta")return true;return !!S.v[it.id]}
 let flashT=null;
 function summary(){
-  const haz=[],bel=[];
-  SPEC.forEach((sec,si)=>{let sub=sec.name;sec.items.forEach((it,ii)=>{
-    if(it.t==="h"){sub=it.l;return}
-    if(it.t!=="cb")return;
-    const cur=S.c[it.n]||[];if(!cur.length)return;
-    const nx=sec.items[ii+1];const cmt=nx&&nx.t==="ta"?(S.v[nx.id]||"").trim():"";
-    const codesOf=L=>it.def.filter(o=>cur.includes(o)&&o.trim()[0]===L);
-    const H=codesOf("H"),B=codesOf("B");
-    const row=codes=>`<li data-go="it${si}_${ii}"><div class="where">${esc(sec.name)}${sub!==sec.name?" · "+esc(sub):""}</div><div class="what">${esc(it.l)}</div>${codes.length?`<ul class="codes">${codes.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`:""}${cmt?`<div class="cmt">${esc(cmt)}</div>`:""}</li>`;
-    if(cur.includes("Hazardous Condition")||H.length)haz.push(row(H));
-    if(cur.includes("Below Minimum")||B.length)bel.push(row(B));
-  })});
+  const haz=[],bel=[],covH=new Set(),covB=new Set();
+  const lines=(txt,L)=>txt.split(/\n+/).map(x=>x.trim()).filter(x=>new RegExp("^"+L+"\\s*[-–—:]").test(x));
+  const pick=(txt,L)=>{const m=lines(txt,L);return m.length?m.join("\n"):txt};
+  const row=(go,where,what,codes,cmt)=>`<li data-go="${go}"><div class="where">${where}</div><div class="what">${esc(what)}</div>${codes.length?`<ul class="codes">${codes.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`:""}${cmt?`<div class="cmt">${esc(cmt).replace(/\n/g,"<br>")}</div>`:""}</li>`;
+  SPEC.forEach((sec,si)=>{let sub=sec.name;const items=sec.items;
+    const whereOf=()=>esc(sec.name)+(sub!==sec.name?" · "+esc(sub):"");
+    items.forEach((it,ii)=>{
+      if(it.t==="h"){sub=it.l;return}
+      if(it.t==="cb"||it.t==="sel"){
+        let cmt="",cid=null,j=ii+1;
+        while(j<items.length&&(items[j].t==="ta"||items[j].t==="sel")){if(items[j].t==="ta"){cmt=(S.v[items[j].id]||"").trim();cid=items[j].id;break}j++}
+        let isH=false,isB=false,H=[],B=[];
+        if(it.t==="cb"){const cur=S.c[it.n]||[];
+          H=it.def.filter(o=>cur.includes(o)&&o.trim()[0]==="H");B=it.def.filter(o=>cur.includes(o)&&o.trim()[0]==="B");
+          isH=cur.includes("Hazardous Condition")||H.length>0;isB=cur.includes("Below Minimum")||B.length>0;}
+        else{const v=S.v[it.id]||"";isH=/hazard/i.test(v);isB=/below/i.test(v);}
+        if(isH&&cid)covH.add(cid);
+        if(isB&&cid)covB.add(cid);
+        if(isH)haz.push(row(`it${si}_${ii}`,whereOf(),it.l,H,cmt&&pick(cmt,"H")));
+        if(isB)bel.push(row(`it${si}_${ii}`,whereOf(),it.l,B,cmt&&pick(cmt,"B")));
+        return;
+      }
+      if(it.t==="ta"){const txt=(S.v[it.id]||"").trim();if(!txt)return;
+        const lbl=it.l.replace(/ ?Comments?$/i,"");
+        if(!covH.has(it.id)&&lines(txt,"H").length)haz.push(row(`t_${it.id}`,whereOf(),lbl,[],pick(txt,"H")));
+        if(!covB.has(it.id)&&lines(txt,"B").length)bel.push(row(`t_${it.id}`,whereOf(),lbl,[],pick(txt,"B")));}
+    });
+  });
   $("hazList").innerHTML=haz.length?haz.join(""):'<li class="none">No hazardous conditions marked.</li>';
   $("belList").innerHTML=bel.length?bel.join(""):'<li class="none">Nothing marked below minimum.</li>';
   $("hazN").textContent=haz.length;$("belN").textContent=bel.length;
