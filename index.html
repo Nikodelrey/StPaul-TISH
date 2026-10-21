@@ -225,7 +225,7 @@ button.ok{background:var(--ok)!important;border-color:var(--ok)!important;color:
 </main>
 
 <div id="review" hidden>
-  <div class="rvbar"><button class="primary" id="bPrint">Save as PDF / Print</button><button id="bCloseRv">Close</button></div>
+  <div class="rvbar"><button class="primary" id="bSavePdf">Save PDF</button><button id="bPrint">Print</button><button id="bCloseRv">Close</button></div>
   <div id="rvBody" class="rvbody"></div>
 </div>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
@@ -242,7 +242,7 @@ button.ok{background:var(--ok)!important;border-color:var(--ok)!important;color:
 <script>
 const SPEC=[{"name":"Basement & Systems","items":[{"t":"sel","id":"TISHSmokedetectorpresent","l":"Smoke Detector Present","r":true,"o":["Yes","No"]},{"t":"sel","id":"TISHSmokedetectorproperlylocated","l":"Smoke Detector Properly Located","r":true,"o":["Yes","Hazard"]},{"t":"sel","id":"TISHSmokedetectorhardwired","l":"Smoke Detector Hard-Wired","r":true,"o":["Yes","No"]},{"t":"ta","id":"TISHSmokedetectorcomment","l":"Smoke Detector Comment"},{"t":"sel","id":"CarbonMonoxideAlarm","l":"Carbon Monoxide Alarm","r":true,"o":["Present","Hazard"]},{"t":"ta","id":"CarbonMonoxideAlarmComments","l":"Carbon Monoxide Alarm Comments"},{"t":"h","l":"Basement"},{"t":"cb","n":"g_0_f_9","l":"Basement Stairs and Handrails","r":true,"p":"TISHBasementstairsandhandrails","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B \u2013 Handrail(s) missing","B - Guardrail missing","B - Handrail(s) not continuous or lacks return","B - Guardrail missing on open side of stairs","B - Steps are damaged"]},{"t":"ta","id":"TISHBasementstairsandhandrailscomments","l":"Basement Stairs and Handrails Comments"},{"t":"sel","id":"TISHBasementheadroomallowedunderSPLC3404","l":"Basement Headroom Allowed Under SPLC 34.04?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHHeadroomallowedcomments","l":"Headroom Allowed Comments"},{"t":"cb","n":"g_0_f_14","l":"Basement/Cellar Floor","r":true,"p":"TISHBasementCellarfloor","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Slab doesn't cover all floor areas","B - Slab poses trip hazards.","B - Slab not in a professional state of repair","C - Heaving, buckling, cracks, or holes"]},{"t":"ta","id":"TISHBasementCellarfloorcomments","l":"Basement/Cellar Floor Comments"},{"t":"cb","n":"g_0_f_16","l":"Foundation","r":true,"p":"TISHFoundation","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Missing, cracked, blocks, bricks, or mortar","B - Spalling of wall or blistering paint","B - Walls not in a professional state of repair","C - Foundation walls concealed or covered","H - Possible structural failure"]},{"t":"ta","id":"TISHFoundationcomments","l":"Foundation Comments"},{"t":"sel","id":"TISHEvidenceofdampnessorstaining","l":"Evidence of Dampness or Staining","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHEvidenceofdampnessorstainingcomments","l":"Evidence of Dampness or Staining Comments"},{"t":"cb","n":"g_0_f_20","l":"First Floor, Floor System","r":true,"p":"TISHFirstfloorfloorsystem","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Floor joists/wood decayed or damaged","B - Wood framing has holes or notches","B - Subfloor shows water seepage or decay","C - Crawlspace exists","H - Potential for structural failure"]},{"t":"ta","id":"TISHFirstfloorfloorsystemcomments","l":"First Floor, Floor System Comments"},{"t":"cb","n":"g_0_f_22","l":"Beams and Columns","r":true,"p":"TISHBeamsandcolumns","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Beams/columns show rot, decay, or damage","B - Beams/columns are sagging, improper support","B - Improper anchoring of temporary beam","C - Beams/columns are concealed or covered","H - Potential for structural failure"]},{"t":"ta","id":"TISHBeamsandcolumnscomments","l":"Beams and Columns Comments"},{"t":"h","l":"Electric"},{"t":"txt","id":"TISHAmps","l":"Amps","r":true},{"t":"txt","id":"TISHVolts","l":"Volts","r":true},{"t":"cb","n":"g_0_f_27","l":"Electrical Service Installation/Grounding","r":true,"p":"TISHElectricalserviceinstallationgrounding","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["H - Knockouts, covers, or doors are missing","H - Faulty jumper wire on water meter"]},{"t":"ta","id":"TISHElectricalserviceinstallationgroundingcomments","l":"Electrical Service Installation/Grounding Comments"},{"t":"sel","id":"TISHElectricalserviceallowedunderSPLC3411","l":"Electrical Service Allowed Under SPLC 34.11?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHElectricalserviceallowedSPLC3411comments","l":"Electrical Service Allowed SPLC 34.11 Comments"},{"t":"cb","n":"g_0_f_32","l":"Electrical Wiring, Outlets, and Fixtures","r":true,"p":"TISHElectricalwiringoutletsandfixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":[]},{"t":"ta","id":"TISHElectricalwiringoutletsandfixturescomments","l":"Electrical Wiring, Outlets, and Fixtures Comments"},{"t":"h","l":"Plumbing"},{"t":"cb","n":"g_0_f_35","l":"Floor Drain(s) (Basement)","r":true,"p":"TISHFloordrainsbasement","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable","Not Viewed"],"def":["B - Floor drain is clogged, broken, or missing","H - Floor drain clean out plug is clogged"]},{"t":"ta","id":"TISHFloordrainsbasementcomments","l":"Floor Drain(s) (Basement) Comments"},{"t":"cb","n":"g_0_f_37","l":"Waste and Vent Piping (all floors)","r":true,"p":"TISHWasteandventpipingallfloors","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Waste line not properly vented","B - Signs of leakage at waste and vent line","B - ABS/PVC waste pipes improperly connected","B - Improper saddle-type connections","B - No proper drainage or venting for shower stall","B - Sump pump improperly drains to sewer line","H - Tape, rags, tar, or putty used on pipes","H - Waste or vent lines not properly capped"]},{"t":"ta","id":"TISHWasteandventpipingcomments","l":"Waste and Vent Piping Comments"},{"t":"cb","n":"g_0_f_39","l":"Water Piping (all floors)","r":true,"p":"TISHWaterpipingallfloors","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Water piping not properly installed","B - Water pipe is crimped, restricts water flow","B - Wrong saddle connectors; clamps to water lines","B - Pipe size doesn't allow water to two fixtures","B - Missing backflow preventer","C- Basement doesn't have proper heating","C - Water supply is off"]},{"t":"ta","id":"TISHWaterpipingcomments","l":"Water Piping Comments"},{"t":"cb","n":"g_0_f_41","l":"Gas Piping (all floors)","r":true,"p":"TISHGaspipingallfloors","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Gas piping not properly installed","B - Gas pipe levers not in 3 feet to appliances","B - Missing drip leg or dirt tee for gas line","B - Corrugated gas connector not installed","H - Levers for gas shut off broken/missing","H - Abandoned gas line not properly capped"]},{"t":"ta","id":"TISHGaspipingcomments","l":"Gas Piping Comments"},{"t":"cb","n":"g_0_f_43","l":"Water Heater(s), Installation","r":true,"p":"TISHWaterheatersinstallation","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Rusting or leaking drain cock or t/p valve","B - Drainpipe not attached to the relief valve","B - Drainpipe not an approved material","H - Missing, scorched, or broken control valves","H - Tank is leaking","H - Missing hot water relief valve","H - Relief valve is capped or plugged","H - Relief valve not operational","C - Water heater installed on combustible surface","C - Manufacturer's guidelines not present"]},{"t":"ta","id":"TISHWaterheatersinstallationcomments","l":"Water Heater(s), Installation Comments"},{"t":"cb","n":"g_0_f_45","l":"Plumbing Fixtures (Basement)","r":true,"p":"TISHPlumbingfixturesbasement","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Fixtures not properly installed or vented","B - Fixtures broken, leaking, not maintained","C - Water supply is disconnected","H - Fixtures don't have a water-sealed trap","H - Fixture is leaking waste"]},{"t":"ta","id":"TISHPlumbingfixturescomments","l":"Plumbing Fixtures Comments"},{"t":"h","l":"Heating"},{"t":"cb","n":"g_0_f_48","l":"Installation and Visible Condition","r":true,"p":"TISHInstallationandvisiblecondition","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Rust, scorched, cracked, damaged casing","H - Signs of leakage","H - Cracks in the combustion chamber","H - Improper clearance to combustible materials","H - Safety control missing or defective"]},{"t":"sel","id":"TISHHeatingtype","l":"Heating Type","r":true,"o":["Forced Air","Other"]},{"t":"sel","id":"TISHFuelType","l":"Fuel Type","r":true,"o":["Gas","Other"]},{"t":"sel","id":"TISHViewedinoperation","l":"Viewed in Operation","r":true,"o":["Yes","No"]},{"t":"ta","id":"TISHHeatingsystemscomments","l":"Heating Systems Comments"},{"t":"cb","n":"g_0_f_53","l":"Combustion Venting","r":true,"p":"TISHCombustionventing","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Inadequate vent size","B - Line doesn't run uphill, improper materials","B - Line doesn't have proper number of screws","B - Line doesn't enter approved chimney properly","B - Line is connected to another appliance","H - Line has holes, not sealed to chimney","H - Line has gaps or is disconnected"]},{"t":"ta","id":"TISHCombustionventingcomments","l":"Combustion Venting Comments"}]},{"name":"Kitchen","items":[{"t":"cb","n":"g_1_f_0","l":"Kitchen Walls and Ceiling","r":true,"p":"TISHKitchenwallsandceiling","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Loose plaster, holes, blistering paint","B - Not in a professional state of repair","C - Walls, ceiling have been patched"]},{"t":"ta","id":"TISHKitchenwallsandceilingcomments","l":"Kitchen Walls and Ceiling Comments"},{"t":"cb","n":"g_1_f_2","l":"Kitchen Floor Condition and Ceiling Height","r":true,"p":"TISHKitchenfloorconditionandceilingheight","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Damaged or deficient floor covering","C - Floor not level in certain areas"]},{"t":"ta","id":"TISHKitchenfloorconditioncomments","l":"Kitchen Floor Condition Comments"},{"t":"sel","id":"TISHKitchenceilingheightallowedunder3413","l":"Kitchen Ceiling Height Allowed Under 34.13?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHKitchenceilingheightcomments","l":"Kitchen Ceiling Height Comments"},{"t":"sel","id":"TISHKitchenevidenceofdampnessorstaining","l":"Kitchen Evidence of Dampness or Staining","r":true,"o":["Yes","No"]},{"t":"cb","n":"g_1_f_8","l":"Kitchen Electrical Outlets and Fixtures","r":true,"p":"TISHKitchenelectricaloutletsandfixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Electrical outlets not properly wired","B - Wiring has missing or damaged parts","B - Missing globe within 18 inches of shelving","C - Missing bulbs in light fixtures","C - Electrical Power is Off","H - There is potential for shock","H - Excessive number of extension cords","H - Missing GFCI outlets"]},{"t":"ta","id":"TISHKitchenelectricaloutletsandfixturescomments","l":"Kitchen Electrical Outlets and Fixtures Comments"},{"t":"cb","n":"g_1_f_10","l":"Kitchen Plumbing Fixtures","r":true,"p":"TISHKitchenplumbingfixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Missing sink and drain line","B - No hot & cold-water supply","B- Water supply lines not properly connected","B - Water controls not properly functioning","B - Controls are missing, worn, have damaged parts","B - Discharge opening located below spill line","B - Water supply line or faucet is leaking","B - Drain line not connected to sewage system","B - Improper material used, not properly vented","C - Water is Off","H - Waste system is leaking","H - Drain line abandoned; not properly capped"]},{"t":"ta","id":"TISHKitchenPlumbingFixturesComment2","l":"Kitchen Plumbing Fixtures Comment"},{"t":"cb","n":"g_1_f_12","l":"Kitchen Water Flow","r":true,"p":"TISHKitchenwaterflow","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["C - Water flow is minimal","C - Water supply is off"]},{"t":"ta","id":"TISHKitchenWaterFlowComment2","l":"Kitchen Water Flow Comment"},{"t":"cb","n":"g_1_f_14","l":"Kitchen Window Size/Openable Area/ Mech. exhaust","r":true,"p":"TISHKitchenWindowsizeopenableareamechexhaust","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":[]},{"t":"ta","id":"TISHKitchenwindowsizeopenableareaexhaustcomments","l":"Kitchen Window Size/Openable Area/Exhaust Comments"},{"t":"sel","id":"TISHKitchenwindowsizeopenableareaallowed3409","l":"Kitchen Window Size/Openable Area Allowed 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHKitchenwindowsizeopenablearea3409Comment","l":"Kitchen Window Size/Openable Area 34.09 Comment"},{"t":"cb","n":"g_1_f_19","l":"Kitchen Condition Doors/Windows/Mechanical Exhaust","r":true,"p":"TISHKitchenconditiondoorswindowsmechanicalexhaust","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["C - Electrical Power is Off","B - Cracked or broken windowpanes","B - Locking hardware missing on windows","B - Windows do not properly open."]},{"t":"sel","id":"TISHKitchendooranddoorframeallowedunder3409","l":"Kitchen Door and Door Frame Allowed Under 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHKitchenconditionofdoorswindowsexhaustcomment","l":"Kitchen Condition of Doors/Windows/Exhaust Comment"}]},{"name":"Living/Dining Rooms & Hallways","items":[{"t":"cb","n":"g_2_f_1","l":"LR/DR Walls and Ceilings","r":true,"p":"TISHLRDRWallsandCeilings","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Loose plaster, holes, blistering paint","B - Not in a professional state of repair","C - Walls, ceiling have been patched"]},{"t":"ta","id":"TISHLRDRWallsandCeilingsComment","l":"LR/DR Walls and Ceilings Comment"},{"t":"cb","n":"g_2_f_3","l":"LR/DR Floor Condition and Ceiling Height","r":true,"p":"TISHLRDRFloorConditionandCeilingHeight","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Damaged or deficient floor covering","C - Floor not level in certain areas","H - Floor has potential for structural failure"]},{"t":"ta","id":"TISHLRDRFloorConditionandCeilingHeightComments","l":"LR/DR Floor Condition and Ceiling Height Comments"},{"t":"sel","id":"TISHLRDRCeilingHeightAllowedUnder3413","l":"LR/DR Ceiling Height Allowed Under 34.13?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHLivingandDiningRoomsComments","l":"Living and Dining Room(s) Comments"},{"t":"sel","id":"TISHLRDREvidenceofDampnessorStaining","l":"LR/DR Evidence of Dampness or Staining","r":true,"o":["Yes","No"]},{"t":"cb","n":"g_2_f_9","l":"LR/DR Electrical Outlets and Fixtures","r":true,"p":"TISHLRDRElectricalOutletsandFixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Minimal outlets present","B - No power to outlets","B - Electrical outlets not properly wired","B - Wiring has missing or damaged parts ","B - Missing globe within 18 inches of shelving","C - Missing bulbs in light fixtures","H - There is potential for shock","H - Excessive number of extension cords","H - Missing GFCI outlets"]},{"t":"ta","id":"TISHLRDRElectricalOutletsandFixturesComments","l":"LR/DR Electrical Outlets and Fixtures Comments"},{"t":"cb","n":"g_2_f_11","l":"LR/DR Window Size and Openable Area","r":true,"p":"TISHLRDRWindowSizeandOpenableArea","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":[]},{"t":"sel","id":"TISHLRDRWindowSizeOpenableAreaAllowedper3409","l":"LR/DR Window Size/Openable Area Allowed per 34.09","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHLRDRWindowSizeandOpenableAreaComments","l":"LR/DR Window Size and Openable Area Comments"},{"t":"cb","n":"g_2_f_15","l":"LR/DR Window and Door Condition","r":true,"p":"TISHLRDRWindowandDoorCondition","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Cracked or broken windowpanes","B - Locking hardware is missing on windows","B - Windows do not properly open"]},{"t":"sel","id":"TISHLRDrDoorandDoorFrameAllowedUnder3409","l":"LR/DR Door and Door Frame Allowed Under 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHLRDRDoorFrameAllowedUnder3409Comments","l":"LR/DR Door/Frame Allowed Under 34.09 Comments"},{"t":"h","l":"Hallway"},{"t":"cb","n":"g_2_f_20","l":"Hallway Walls, Ceilings, Floors","r":true,"p":"TISHHallwayWallsCeilingsFloors","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Loose plaster, holes, blistering paint","B - Not in a professional state of repair","B - Damaged or deficient floor covering","C - Walls, ceiling have been patched","C - Floor not level in certain areas"]},{"t":"ta","id":"TISHHallwaysStairsandEntriesComments","l":"Hallways, Stairs, and Entries Comments"},{"t":"sel","id":"TISHHallwayEvidenceofdampnessorstaining","l":"Hallway Evidence of Dampness or Staining","r":true,"o":["Yes","No"]},{"t":"cb","n":"g_2_f_23","l":"Stairs and Handrails to Upper Floors","r":true,"p":"TISHStairsandHandrailstoUpperFloors","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Handrail(s) missing","B - Handrail(s) not continuous or lack return","B - Steps are damaged"]},{"t":"ta","id":"TISHStairsandHandrailstoUpperFloorsComments","l":"Stairs and Handrails to Upper Floors Comments"},{"t":"sel","id":"TISHStairsAllowedUnder3409","l":"Stairs Allowed Under 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHStairsAllowedUnder3409Comments","l":"Stairs Allowed Under 34.09 Comments"},{"t":"sel","id":"TISHCeilingHeightAllowedUnder3413","l":"Ceiling Height Allowed Under 34.13?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHCeilingHeightAllowedUnder3413Comments","l":"Ceiling Height Allowed Under 34.13 Comments"},{"t":"sel","id":"TISHHeadroomAllowedUnderSPLC_3404","l":"Headroom Allowed Under SPLC 34.04?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHHeadroomAllowedUnderSPLC_3404Comments","l":"Headroom Allowed Under SPLC 34.04 Comments"},{"t":"cb","n":"g_2_f_34","l":"Hallway Electrical Outlets and Fixtures","r":true,"p":"TISHHallwayElectricalOutletsandFixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - No power to outlets","B - Electrical outlets not properly wired","B - Wiring has missing or damaged parts","C - Missing bulbs in light fixtures","H - There is potential for shock"]},{"t":"ta","id":"TISHHallwayElectricalOutletsandFixturesComments","l":"Hallway Electrical Outlets and Fixtures Comments"},{"t":"cb","n":"g_2_f_36","l":"Hallway Window and Door Conditions","r":true,"p":"TISHHallwayWindowandDoorConditions","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Cracked or broken windowpanes","B - Windows do not properly open"]},{"t":"sel","id":"TISHHallwayDoorandDoorFrameAllowedUnder3409","l":"Hallway Door and Door Frame Allowed Under 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHHallwayWindowandDoorConditionsComments","l":"Hallway Window and Door Conditions Comments"}]},{"name":"Bathroom","items":[{"t":"cb","n":"g_3_f_0","l":"Bath Walls and Ceiling","r":true,"p":"TISHBathWallsandCeiling","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Loose plaster, holes, blistering paint","B - Not in a professional state of repair","C - Walls, ceiling have been patched"]},{"t":"ta","id":"TISHBathWallsandCeilingComments","l":"Bath Walls and Ceiling Comments"},{"t":"cb","n":"g_3_f_2","l":"Bath Floor Condition and Ceiling Height","r":true,"p":"TISHBathFloorConditionandCeilingHeight","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Damaged or deficient floor covering","B - Floor not impervious to water","C - Floor not level in certain areas"]},{"t":"sel","id":"TISHBathCeilingHeightAllowedUnder3413","l":"Bath Ceiling Height Allowed Under 34.13?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHBathFloorConditionCeilingHeightComments","l":"Bath Floor Condition & Ceiling Height Comments"},{"t":"sel","id":"TISHBathEvidenceofDampnessorStaining","l":"Bath Evidence of Dampness or Staining","r":true,"o":["Yes","No"]},{"t":"cb","n":"g_3_f_7","l":"Bath Electrical Outlets and Fixtures","r":true,"p":"TISHBathElectricalOutletsandFixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Minimal outlets present","B - No power to outlets","B - Electrical outlets not properly wired","B - Wiring has missing or damaged parts","B - Missing globe within 18 inches of shelving","C - Missing bulbs in light fixtures","H - There is potential for shock","H - Missing GFCI outlets"]},{"t":"ta","id":"TISHBathElectricalOutletsandFixturesComments","l":"Bath Electrical Outlets and Fixtures Comments"},{"t":"cb","n":"g_3_f_9","l":"Bath Plumbing Fixtures","r":true,"p":"TISHBathPlumbingFixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Missing sink and drain line","B - No hot & cold-water supply","B- Water supply lines not properly connected","B - Water controls not properly functioning","B - Controls are missing, worn, have damaged parts","B - Discharge opening located below spill line","B - Improper material used, not properly vented","H - Waste system is leaking","H - Drain line abandoned; not properly capped","H - Anti-siphon ball cock in toilet missing","H - Improperly installed anti-siphon ball cock"]},{"t":"ta","id":"TISHBathPlumbingFixturesComments","l":"Bath Plumbing Fixtures Comments"},{"t":"cb","n":"g_3_f_11","l":"Bath Water Flow","r":true,"p":"TISHBathWaterFlow","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["C - Water flow is minimal","C - Water supply is off"]},{"t":"ta","id":"TISHBathWaterFlowComments","l":"Bath Water Flow Comments"},{"t":"cb","n":"g_3_f_13","l":"Bath Windows Size/Openable Area/Mechanical Exhaust","r":true,"p":"TISHBathWindowsSizeOpenableAreaMechanicalExhaust","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Exhaust not properly vented to outside"]},{"t":"sel","id":"TISHBathWindowSizeOpenableAreaAllowedUnder3409","l":"Bath Window Size/Openable Area Allowed Under 34.09","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHBathWindowSizeOpenableArea3409Comments","l":"Bath Window Size/Openable Area 34.09 Comments"},{"t":"ta","id":"TISHBathWindowsSizeOpenableAreaExhaustComments","l":"Bath Windows Size/Openable Area/Exhaust Comments"},{"t":"cb","n":"g_3_f_18","l":"Bath Condition of Windows, Doors, Mech. Exhaust","r":true,"p":"TISHBathConditionofWindowsDoorsMechExhaust","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Cracked or broken windowpanes","B - Windows missing locking hardware","B - Windows do not properly open"]},{"t":"sel","id":"TISHBathDoorandDoorFrameAllowedUnder3409","l":"Bath Door and Door Frame Allowed Under 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHBathDoorDoorFrameAllowedUnder3409Comments","l":"Bath Door/Door Frame Allowed Under 34.09 Comments"},{"t":"ta","id":"TISHBathConditionWindowsDoorsExhaustComments","l":"Bath Condition Windows/Doors Exhaust Comments"}]},{"name":"Sleeping Rooms","items":[{"t":"cb","n":"g_4_f_0","l":"Sleeping Rooms Walls and Ceilings","r":true,"p":"TISHSleepingRoomsWallsandCeilings","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Loose plaster, holes, blistering paint","B - Not in a professional state of repair","C - Walls, ceiling have been patched"]},{"t":"ta","id":"TISHSleepingRoomsWallsandCeilingsComments","l":"Sleeping Rooms Walls and Ceilings Comments"},{"t":"cb","n":"g_4_f_2","l":"Sleeping Floor Condition and Ceiling Height","r":true,"p":"TISHSleepingFloorConditionandCeilingHeight","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Damaged or deficient floor covering","C - Floor not level in certain areas","H - Floor has potential for structural failure"]},{"t":"sel","id":"TISHSleepingCeilingHeightAllowedUnder3413","l":"Sleeping Ceiling Height Allowed Under 34.13?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHSleepingRoom3413Comments","l":"Sleeping Room 34.13 Comments"},{"t":"ta","id":"TISHSleepingRmsFloorConditionCeilingHtComments","l":"Sleeping Rms Floor Condition/Ceiling Ht. Comments"},{"t":"sel","id":"TISHSleepingEvidenceofDampnessorStaining","l":"Sleeping Evidence of Dampness or Staining","r":true,"o":["Yes","No"]},{"t":"cb","n":"g_4_f_8","l":"Sleeping Electrical Outlets and Fixtures","r":true,"p":"TISHSleepingElectricalOutletsandFixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Minimal outlets present","B - No power to outlets","B - Outlets not properly wired","B - Wiring has missing or damaged parts","B - Missing globe within 18 inches of shelving","C - Missing bulbs in light fixtures","H - There is potential for shock","H - Excessive number of extension cords","H - Missing GFCI outlets"]},{"t":"ta","id":"TISHSleepingRoomsElectricalComments","l":"Sleeping Rooms Electrical Comments"},{"t":"cb","n":"g_4_f_10","l":"Sleeping Rooms Window Size and Openable Area","r":true,"p":"TISHSleepingRoomsWindowSizeandOpenableArea","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":[]},{"t":"sel","id":"TISHSleepingWindowSizeOpenableAreaAllowed3409","l":"Sleeping Window Size/Openable Area Allowed 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHSleepingWindowSizeOpenableArea3409Comments","l":"Sleeping Window Size/Openable Area 34.09 Comments"},{"t":"ta","id":"TISHSleepingRoomsWindowSizeOpenableAreaComments","l":"Sleeping Rooms Window Size/Openable Area Comments"},{"t":"cb","n":"g_4_f_15","l":"Sleeping Room Window and Door Condition","r":true,"p":"TISHSleepingRoomWindowandDoorCondition","rate":["Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Cracked or broken windowpanes","B - Locking hardware missing on windows","B - Windows do not properly open"]},{"t":"sel","id":"TISHSleepingRoomsDoorframeAllowedUnder3409","l":"Sleeping Rooms Door/frame Allowed Under 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHSleepingRoomsDoorFrame3409Comments","l":"Sleeping Rooms Door/Frame 34.09 Comments"},{"t":"ta","id":"TISHSleepingRoomsWindowandDoorConditionComments","l":"Sleeping Rooms Window and Door Condition Comments"}]},{"name":"Other Rooms & Attic","items":[{"t":"cb","n":"g_5_f_1","l":"Other Rooms Walls, Ceiling, and Floor Condition","r":true,"p":"TISHOtherRoomsWallsCeilingandFloorCondition","rate":["Not Applicable","Meets Minimum","Below Minimum","Hazardous Condition"],"def":["B - Loose plaster, holes, blistering paint","B - Not kept in a professional state of repair","B - Damaged or deficient floor covering","C - Walls or ceiling have been patched","C - Floor not level in certain areas"]},{"t":"ta","id":"TISHOtherRoomsWallsCeilingFloorConditionComments","l":"Other Rooms Walls/Ceiling/Floor Condition Comments"},{"t":"sel","id":"TISHOtherRoomsEvidenceofDampnessorStaining","l":"Other Rooms Evidence of Dampness or Staining","r":true,"o":["Yes","No"]},{"t":"cb","n":"g_5_f_4","l":"Other Rooms Electrical Outlets and Fixtures","r":true,"p":"TISHOtherRoomsElectricalOutletsandFixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Minimal outlets present","B - No power to outlets","B - Outlets not properly wired","B - Wiring has missing or damaged parts","B - Missing globe within 18 inches of shelving","C - Missing bulbs in light fixtures","H - There is potential for shock","H - Excessive number of extension cords","H - Missing GFCI outlets"]},{"t":"ta","id":"TISHOtherRoomsElectricalOutletsFixturesComments","l":"Other Rooms Electrical Outlets/Fixtures Comments"},{"t":"cb","n":"g_5_f_6","l":"Other Rooms Window(s) and Door(s) Condition","r":true,"p":"TISHOtherRoomsWindowsandDoorsCondition","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Cracked or broken windowpanes","B - Locking hardware missing on windows","B - Windows do not properly open"]},{"t":"sel","id":"TISHOtherRoomsDoorDoorFrameAllowedUnder3409","l":"Other Rooms Door/Door Frame Allowed Under 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHOtherRoomsDoorWindows3409Comments","l":"Other Rooms Door/Windows 34.09 Comments"},{"t":"ta","id":"TISHOtherRoomsWindowDoorsConditionComments","l":"Other Rooms Window/ Door(s) Condition Comments"},{"t":"h","l":"Attic"},{"t":"cb","n":"g_5_f_12","l":"Roof Boards and Rafters","r":true,"p":"TISHRoofBoardsandRafters","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable","Not Viewed"],"def":["B - Roof boards or rafters are defective","H - Potential for structural failure"]},{"t":"ta","id":"TISHRoofBoardsandRaftersComments","l":"Roof Boards and Rafters Comments"},{"t":"sel","id":"AtticSpaceEvidenceofDampnessorStaining","l":"Attic Space Evidence of Dampness or Staining","r":true,"o":["Yes","No","Not Applicable"]},{"t":"cb","n":"g_5_f_15","l":"Attic Space Electrical Wire, Outlets, Fixtures","r":true,"p":"TISHAtticSpaceElectricalWireOutletsFixtures","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable","Not Viewed"],"def":["B - No power to outlets","B - Electrical outlets not properly wired","B - Wiring has missing or damaged parts","C - Missing bulbs in light fixtures","H - There is potential for shock"]},{"t":"ta","id":"TISHAtticSpaceElectricalComments","l":"Attic Space Electrical Comments"},{"t":"sel","id":"TISHAtticVentilation","l":"Attic Ventilation","r":true,"o":["Yes","No","Not Applicable","Not Viewed"]},{"t":"ta","id":"TISHAtticVentilationComments","l":"Attic Ventilation Comments"}]},{"name":"Exterior & Garage","items":[{"t":"h","l":"Exterior"},{"t":"cb","n":"g_6_f_0","l":"Exterior Foundation","r":true,"p":"TISHExteriorFoundation","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Missing, cracked, blocks, bricks, or mortar","B - Damaged or loose plaster, siding, stucco","B - Exposed insulation","B - Walls not in a professional state of repair","C - Foundation walls concealed","H - Evidence of severe structural damage"]},{"t":"ta","id":"TISHExteriorFoundationComments","l":"Exterior Foundation Comments"},{"t":"cb","n":"g_6_f_2","l":"Exterior Basement/Cellar Windows","r":true,"p":"TISHExteriorBasementCellarWindows","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Cracked or broken windowpanes"]},{"t":"ta","id":"TISHExteriorBasementCellarWindowsComments","l":"Exterior Basement/Cellar Windows Comments"},{"t":"cb","n":"g_6_f_4","l":"Drainage (Grade)","r":true,"p":"TISHDrainageGrade","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Water does not drain away from the building"]},{"t":"ta","id":"TISHDrainageGradeComments","l":"Drainage (Grade) Comments"},{"t":"cb","n":"g_6_f_6","l":"Exterior Walls","r":true,"p":"TISHExteriorWalls","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Weathered, peeling paint, wood appears rotted","B - Loose, cracked, missing, deteriorated siding","B - Broken or damaged stucco","C - Missing house numbers","H - Evidence of severe structural damage"]},{"t":"ta","id":"TISHExteriorWallsComments","l":"Exterior Walls Comments"},{"t":"cb","n":"g_6_f_8","l":"Exterior Doors (Frames, Storms, Screens)","r":true,"p":"TISHExteriorDoorsFramesStormsScreens","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Broken or defective hardware","B - Not in a professional state of repair","B - Missing approved deadbolt lock","C - Double-keyed deadbolts"]},{"t":"ta","id":"TISHExteriorDoorsFramesStormsScreensComments","l":"Exterior Doors (Frames, Storms, Screens) Comments"},{"t":"cb","n":"g_6_f_10","l":"Exterior Windows (Frames, Storms, Screens)","r":true,"p":"TISHExteriorWindowsFramesStormsScreens","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Not in a professional state of repair"]},{"t":"ta","id":"TISHExteriorWindowsComments","l":"Exterior Windows Comments"},{"t":"cb","n":"g_6_f_12","l":"Open Porches, Stairways, and Deck(s)","r":true,"p":"TISHOpenPorchesStairwaysandDecks","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Not in a professional state of repair"]},{"t":"sel","id":"TISHExteriorStairConfigurationAllowedUnder3409","l":"Exterior Stair Configuration Allowed Under 34.09?","r":true,"o":["Yes","No","Not Applicable"]},{"t":"ta","id":"TISHExteriorStair3409Comments","l":"Exterior Stair 34.09 Comments"},{"t":"ta","id":"TISHOpenPorchesStairwaysandDecksComments","l":"Open Porches, Stairways, and Deck(s) Comments"},{"t":"cb","n":"g_6_f_17","l":"Cornice and Trim(s)","r":true,"p":"TISHCorniceandTrims","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Not in a professional state of repair"]},{"t":"ta","id":"TISHCorniceandTrimsComments","l":"Cornice and Trim(s) Comments"},{"t":"cb","n":"g_6_f_19","l":"Roof Structure and Covering","r":true,"p":"TISHRoofstructureandCovering","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable","Not Viewed"],"def":["B - Not in a professional state of repair."]},{"t":"ta","id":"TISHRoofStructureandCoveringComments","l":"Roof Structure and Covering Comments"},{"t":"cb","n":"g_6_f_21","l":"Gutters and Downspouts","r":true,"p":"TISHGuttersandDownspouts","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Not in a professional state of repair"]},{"t":"ta","id":"TISHGuttersandDownspoutsComments","l":"Gutters and Downspouts Comments"},{"t":"cb","n":"g_6_f_23","l":"Chimney(s)","r":true,"p":"TISHChimneys","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable","Not Viewed"],"def":["B - Not in a professional state of repair","B - Missing or deteriorated flue liner","H - Missing components; possible collapse"]},{"t":"ta","id":"TISHChimneysComments","l":"Chimney(s) Comments"},{"t":"cb","n":"g_6_f_25","l":"Outlets, Fixtures, and Service Entrance","r":true,"p":"TISHOutletsFixturesandServiceEntrance","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Missing light fixture(s)","H - Exposed wiring; broken fixtures"]},{"t":"ta","id":"TISHOutletsFixturesandServiceEntranceComments","l":"Outlets, Fixtures, and Service Entrance Comments"},{"t":"h","l":"Garage"},{"t":"cb","n":"g_6_f_28","l":"Garage/Accessory Roof Str & Covering","r":true,"p":"TISHGarageAccessoryRoofStrCovering","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable","Not Viewed"],"def":[]},{"t":"ta","id":"TISHGarageAccessoryRoofStrCoveringComments","l":"Garage/Accessory Roof Str & Covering Comments"},{"t":"cb","n":"g_6_f_30","l":"Garage/Accessory Slab Condition","r":true,"p":"TISHGarageAccessorySlabCondition","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable","Not Viewed"],"def":["B - Not in a professional state of repair"]},{"t":"ta","id":"TISHGarageAccessorySlabConditionComments","l":"Garage/Accessory Slab Condition Comments"},{"t":"cb","n":"g_6_f_32","l":"Garage Door(s)","r":true,"p":"TISHGarageDoors","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":["B - Not in a professional state of repair"]},{"t":"ta","id":"TISHGarageDoorsComments","l":"Garage Door(s) Comments"},{"t":"cb","n":"g_6_f_34","l":"Garage Opener(s)","r":true,"p":"TISHGarageOpeners","rate":["Yes","No","Hazardous Condition","Not Applicable"],"def":[]},{"t":"cb","n":"g_6_f_35","l":"Garage/Accessory Structure Electrical Wiring","r":true,"p":"TISHGarageAccessoryStructureElectricalWiring","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":[]},{"t":"ta","id":"TISHGarageAccessoryStructureElectricalComments","l":"Garage/Accessory Structure Electrical Comments"},{"t":"sel","id":"TISHPlumbinguncappedgaslinepresent","l":"Plumbing (uncapped gas line present)","r":true,"o":["Yes","No","Not Applicable"]}]},{"name":"Fireplace, Insulation & Wrap-up","items":[{"t":"sel","id":"TISHDampersInstalled","l":"Dampers Installed","r":true,"o":["Yes","No","Not Applicable"]},{"t":"cb","n":"g_7_f_2","l":"Fireplace Installation","r":true,"p":"TISHFireplaceInstallation","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":[]},{"t":"ta","id":"TISHFireplaceInstallationComments","l":"Fireplace Installation Comments"},{"t":"cb","n":"g_7_f_4","l":"Fireplace Condition","r":true,"p":"TISHFireplaceCondition","rate":["Meets Minimum","Below Minimum","Hazardous Condition","Not Applicable"],"def":[]},{"t":"ta","id":"TISHFireplaceConditionComment","l":"Fireplace Condition Comment"},{"t":"ta","id":"TISHAtticInsulationComments","l":"Attic Insulation Comments"},{"t":"ta","id":"TISHFoundationInsulationComments","l":"Foundation Insulation Comments"},{"t":"ta","id":"TISHKneeWallInsulationComments","l":"Knee Wall Insulation Comments"},{"t":"ta","id":"TISHRimJoistInsulationComments","l":"Rim Joist Insulation Comments"},{"t":"date","id":"TISHDateofEvaluation","l":"Date of Evaluation","r":true},{"t":"h","l":"Wrap-up"},{"t":"ta","id":"TISHGeneralComments","l":"General Comments"}]}];
 SPEC.forEach(s=>s.items.forEach(it=>{if(it.t==="ta"&&s.name.startsWith("Fireplace")&&/insulation|general/i.test(it.l))it.need=true}));
-const APP_VERSION="Oct 19, 2026 (c)";
+const APP_VERSION="Oct 21, 2026 (a)";
 const DATE_ID="TISHDateofEvaluation";
 const SMOKE_DEFAULT="C - Monitor smoke and carbon monoxide detector batteries, age and operation";
 const KEY={draft:"tishsp.draft",def:"tishsp.defaults",dirty:"tishsp.dirty"};
@@ -465,6 +465,231 @@ $("spellOut").addEventListener("click",e=>{const b=e.target.closest("button");if
     S.v[id]=S.v[id].replace(re,(m,p)=>p+s);const ta=$("t_"+id);if(ta)ta.value=S.v[id];save();runSpell();return}
   if(b.dataset.ign){const m=myWords();m.add(b.dataset.ign.replace(/'s$/i,"").toLowerCase());lsSet("tishsp.words",JSON.stringify([...m]));runSpell()}
 });
+// ---------- PDF writer (same one as the Minneapolis app) ----------
+// =======================================
+var HELV_W = [278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584];
+var HELVB_W = [278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,333,278,333,584,556,333,556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,389,280,389,584];
+var WIN_ANSI = { 8216:145, 8217:146, 8220:147, 8221:148, 8226:149, 8211:150, 8212:151, 8230:133, 8482:153, 8364:128 };
+
+function pdfByte(ch) {
+  var c = ch.charCodeAt(0);
+  if (c < 128 || (c >= 160 && c <= 255)) return c;
+  return WIN_ANSI[c] || 63;
+}
+function pdfStr(s) {
+  var out = "";
+  String(s == null ? "" : s).replace(/[\r\n\t]+/g, " ").split("").forEach(function(ch) {
+    var b = pdfByte(ch);
+    if (b === 40 || b === 41 || b === 92) out += "\\" + String.fromCharCode(b);
+    else if (b < 32 || b > 126) out += "\\" + ("00" + b.toString(8)).slice(-3);
+    else out += String.fromCharCode(b);
+  });
+  return "(" + out + ")";
+}
+function textWidth(s, bold, size) {
+  var w = 0, tbl = bold ? HELVB_W : HELV_W;
+  String(s).split("").forEach(function(ch) {
+    var c = ch.charCodeAt(0);
+    w += (c >= 32 && c <= 126) ? tbl[c - 32] : 556;
+  });
+  return w * size / 1000;
+}
+
+function PdfDoc(opts) {
+  this.W = 612; this.H = 792; this.L = 40; this.R = 572;
+  this.TOP = 728; this.BOTTOM = 56;
+  this.opts = opts;
+  this.pages = [];
+  this.newPage();
+}
+PdfDoc.prototype.newPage = function() {
+  this.cur = [];
+  this.pages.push(this.cur);
+  // running header
+  this.text(this.L, 766, "St. Paul TISH Evaluation - Review Copy", "B", 13);
+  this.text(this.L, 752, "Address:", "B", 9);
+  this.text(this.L + 42, 752, this.opts.address, "R", 9);
+  this.y = this.TOP;
+};
+PdfDoc.prototype.font = function(f) { return f === "B" ? "F2" : (f === "I" ? "F3" : "F1"); };
+PdfDoc.prototype.text = function(x, y, s, f, size) {
+  this.cur.push("BT /" + this.font(f) + " " + size + " Tf " + x.toFixed(2) + " " + y.toFixed(2) + " Td " + pdfStr(s) + " Tj ET");
+};
+PdfDoc.prototype.hline = function(x1, x2, y, w) {
+  this.cur.push((w || 0.5) + " w " + x1 + " " + y.toFixed(2) + " m " + x2 + " " + y.toFixed(2) + " l S");
+};
+PdfDoc.prototype.box = function(x, y, w, h, fillGray) {
+  if (fillGray != null) this.cur.push(fillGray + " g " + x + " " + y.toFixed(2) + " " + w + " " + h.toFixed(2) + " re f 0 g");
+  else this.cur.push("0.6 G 0.5 w " + x + " " + y.toFixed(2) + " " + w + " " + h.toFixed(2) + " re S 0 G");
+};
+PdfDoc.prototype.need = function(h) { if (this.y - h < this.BOTTOM) this.newPage(); };
+PdfDoc.prototype.wrap = function(s, bold, size, maxW) {
+  var words = String(s == null ? "" : s).replace(/\s+/g, " ").trim().split(" "), lines = [], line = "";
+  if (!words[0]) return [""];
+  words.forEach(function(wd) {
+    var test = line ? line + " " + wd : wd;
+    if (textWidth(test, bold, size) <= maxW) { line = test; return; }
+    if (line) lines.push(line);
+    // break very long words
+    while (textWidth(wd, bold, size) > maxW) {
+      var k = wd.length;
+      while (k > 1 && textWidth(wd.slice(0, k), bold, size) > maxW) k--;
+      lines.push(wd.slice(0, k)); wd = wd.slice(k);
+    }
+    line = wd;
+  });
+  if (line) lines.push(line);
+  return lines;
+};
+// Paragraph; returns nothing, moves the cursor down
+PdfDoc.prototype.para = function(s, f, size, x, maxW, lead, align) {
+  var self = this, bold = f === "B";
+  lead = lead || size * 1.3;
+  this.wrap(s, bold, size, maxW).forEach(function(ln) {
+    self.need(lead);
+    var tx = x;
+    if (align === "center") tx = x + (maxW - textWidth(ln, bold, size)) / 2;
+    if (align === "right") tx = x + maxW - textWidth(ln, bold, size);
+    self.text(tx, self.y - size, ln, f, size);
+    self.y -= lead;
+  });
+};
+// "Label: value" on one line, value wrapped after the label
+PdfDoc.prototype.kv = function(label, value, x, maxW, size) {
+  size = size || 9;
+  var lw = textWidth(label + " ", true, size);
+  var lines = this.wrap(value, false, size, maxW - lw);
+  var self = this, lead = size * 1.3;
+  lines.forEach(function(ln, i) {
+    self.need(lead);
+    if (!i) self.text(x, self.y - size, label, "B", size);
+    self.text(x + lw, self.y - size, ln, "R", size);
+    self.y -= lead;
+  });
+};
+PdfDoc.prototype.table = function(cols, rows, size) {
+  var self = this, lead = size * 1.25;
+  function header() {
+    self.need(lead + 4);
+    var x = self.L;
+    cols.forEach(function(c) { self.text(x + 2, self.y - size, c.title, "B", size); x += c.w; });
+    self.y -= lead + 2;
+    self.hline(self.L, self.R, self.y + 1, 0.7);
+    self.y -= 3;
+  }
+  header();
+  rows.forEach(function(r) {
+    var cells = cols.map(function(c, i) { return self.wrap(r[i], false, size, c.w - 6); });
+    var n = Math.max.apply(null, cells.map(function(l) { return l.length; }));
+    var h = n * lead + 3;
+    if (self.y - h < self.BOTTOM) { self.newPage(); header(); }
+    var x = self.L;
+    cells.forEach(function(lines, ci) {
+      lines.forEach(function(ln, li) { self.text(x + 2, self.y - size - li * lead, ln, "R", size); });
+      x += cols[ci].w;
+    });
+    self.y -= h;
+  });
+};
+PdfDoc.prototype.gap = function(h) { this.y -= h; };
+PdfDoc.prototype.pageBreak = function() { this.newPage(); };
+
+PdfDoc.prototype.bytes = function() {
+  var self = this, total = this.pages.length;
+  // running footer with page numbers
+  this.pages.forEach(function(p, i) {
+    self.cur = p;
+    self.hline(self.L, self.R, 44, 0.5);
+    self.text(self.L, 32, "Blue Sky Inspections", "B", 8);
+    self.text(self.L + 92, 32, "Filler v " + self.opts.version, "R", 8);
+    self.text(250, 32, "Evaluation Date:", "B", 8);
+    self.text(318, 32, self.opts.evalDate, "R", 8);
+    var pg = "Page " + (i + 1) + " of " + total;
+    self.text(self.R - textWidth(pg, false, 8), 32, pg, "R", 8);
+  });
+
+  var objs = [];
+  objs[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+  objs[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+  objs[4] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+  objs[5] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>";
+  var kids = [];
+  this.pages.forEach(function(p, i) {
+    var cid = 6 + i * 2, pid = 7 + i * 2;
+    var stream = p.join("\n");
+    objs[cid] = "<< /Length " + stream.length + " >>\nstream\n" + stream + "\nendstream";
+    objs[pid] = "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + self.W + " " + self.H + "] " +
+                "/Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents " + cid + " 0 R >>";
+    kids.push(pid + " 0 R");
+  });
+  objs[2] = "<< /Type /Pages /Kids [" + kids.join(" ") + "] /Count " + total + " >>";
+
+  var out = "%PDF-1.4\n", offs = [];
+  for (var n = 1; n < objs.length; n++) {
+    offs[n] = out.length;
+    out += n + " 0 obj\n" + objs[n] + "\nendobj\n";
+  }
+  var xref = out.length;
+  out += "xref\n0 " + objs.length + "\n0000000000 65535 f \n";
+  for (n = 1; n < objs.length; n++) out += ("0000000000" + offs[n]).slice(-10) + " 00000 n \n";
+  out += "trailer\n<< /Size " + objs.length + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF";
+  var bytes = new Uint8Array(out.length);
+  for (var k = 0; k < out.length; k++) bytes[k] = out.charCodeAt(k) & 255;
+  return bytes;
+};
+
+
+function buildReviewPDF(){
+  const doc=new PdfDoc({address:S.addr||"(no address)",evalDate:S.v[DATE_ID]||"",version:APP_VERSION});
+  const L=doc.L,W=doc.R-doc.L,QW=250,AX=L+QW+12,AW=doc.R-AX;
+  const line=()=>{doc.hline(L,doc.R,doc.y+3,0.3)};
+  // summaries
+  const lists=[["Hazardous conditions","hazList"],["Below minimum","belList"]];
+  lists.forEach(([title,id])=>{
+    const lis=[...$(id).children].filter(li=>!li.classList.contains("none"));
+    doc.need(30);doc.para(title+" ("+lis.length+")","B",11,L,W,15);
+    if(!lis.length)doc.para("None marked.","R",9,L+10,W-10);
+    lis.forEach(li=>{const what=li.querySelector(".what")?.textContent||"";const codes=[...li.querySelectorAll(".codes li")].map(x=>x.textContent);const cm=li.querySelector(".cmt")?.textContent||"";
+      doc.para("- "+what+(codes.length?": "+codes.join("; "):""),"R",9,L+10,W-10);
+      if(cm)doc.para(cm,"I",8.5,L+22,W-22);});
+    doc.gap(8);
+  });
+  const left=$("todoN").textContent;
+  if(left!=="0"){doc.para("Still to fill out: "+left+" item"+(left==="1"?"":"s"),"B",10,L,W,14);doc.gap(4)}
+  SPEC.forEach(sec=>{
+    doc.need(40);doc.gap(6);doc.para(sec.name.toUpperCase(),"B",11,L,W,14);doc.hline(L,doc.R,doc.y+2,1);doc.gap(4);
+    sec.items.forEach(it=>{
+      if(it.t==="date")return;
+      if(it.t==="h"){doc.need(24);doc.gap(4);doc.para(it.l.toUpperCase(),"B",8.5,L,W,12);return}
+      if(it.t==="ta"){const v=(S.v[it.id]||"").trim();if(!v&&!it.need)return;
+        doc.need(22);doc.para((it.need?"* ":"")+it.l,"B",9,L,W,12);
+        v.split(/\n+/).forEach(ln=>doc.para(ln,"I",9,L+10,W-10,11.5));if(!v)doc.para("NOT ANSWERED","B",9,L+10,W-10);
+        doc.gap(3);line();doc.gap(3);return}
+      let ans=[],codes=[];
+      if(it.t==="cb"){const cur=S.c[it.n]||[];ans=it.rate.filter(o=>cur.includes(o));codes=it.def.filter(o=>cur.includes(o));}
+      else if(S.v[it.id])ans=[S.v[it.id]];
+      const qLines=doc.wrap((it.r?"* ":"")+it.l,true,9,QW);
+      const aTxt=ans.length?ans.join(", "):(codes.length?"":(it.r?"NOT ANSWERED":"-"));
+      const aLines=aTxt?doc.wrap(aTxt,ans.some(a=>/haz/i.test(a))||aTxt==="NOT ANSWERED",9,AW):[];
+      const cLines=codes.flatMap(c=>doc.wrap(c,false,8.5,AW-8));
+      const h=Math.max(qLines.length,aLines.length+cLines.length)*12+4;
+      doc.need(h);const y0=doc.y;
+      qLines.forEach((ln,i)=>doc.text(L,y0-9-i*12,ln,"B",9));
+      let k=0;aLines.forEach(ln=>{doc.text(AX,y0-9-k*12,ln,(/haz/i.test(ln)||ln==="NOT ANSWERED")?"B":"R",9);k++});
+      cLines.forEach(ln=>{doc.text(AX+8,y0-9-k*12,ln,"R",8.5);k++});
+      doc.y=y0-h;line();
+    });
+  });
+  return doc.bytes();
+}
+async function saveReviewPDF(){
+  const name=((S.addr||"TISH").replace(/[\\/:*?"<>|#]+/g,"").trim()||"TISH")+" "+(S.v[DATE_ID]||new Date().toISOString().slice(0,10))+" review.pdf";
+  let bytes;try{bytes=buildReviewPDF()}catch(e){toast("<b>Couldn't make the PDF</b><br>"+esc(e.message));return}
+  const file=new File([bytes],name,{type:"application/pdf"});
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]});return}}catch(e){if(e&&e.name==="AbortError")return}
+  const url=URL.createObjectURL(file);const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),20000);
+  toast("<b>PDF saved</b><br>Find it in Files → Downloads.");
+}
 // ---------- review report ----------
 function rvRating(txt){return txt==="Meets Minimum"||txt==="Yes"||txt==="Present"?"rv-m":/below/i.test(txt)?"rv-b":/haz/i.test(txt)?"rv-h":""}
 function buildReview(){
@@ -491,6 +716,8 @@ function buildReview(){
 $("bReview").onclick=()=>{buildReview();$("review").hidden=false;$("review").scrollTop=0;document.title=((S.addr||"TISH")+" review").replace(/[\/:*?"<>|#]+/g,"")};
 $("bCloseRv").onclick=()=>{$("review").hidden=true;document.title="St. Paul TISH Filler"};
 $("bPrint").onclick=()=>{try{window.print()}catch(e){}};
+$("bSavePdf").onclick=saveReviewPDF;
+if(window.navigator.standalone)$("bPrint").hidden=true; // Print does nothing in a Home Screen app
 $("bTools").onclick=()=>{$("toolsPanel").hidden=!$("toolsPanel").hidden};
 
 function fileName(){
